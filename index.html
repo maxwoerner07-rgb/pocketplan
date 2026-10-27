@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#172a25">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PocketPlan">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>PocketPlan</title>
+<style>
+:root{color-scheme:light;--bg:#f5f7f5;--card:#fff;--ink:#172a25;--muted:#68766f;--line:#e2e8e3;--green:#1d7650;--pale:#e1f5e8;--red:#b93838;--orange:#8a5a00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit}button{cursor:pointer}header{background:#172a25;color:white;padding:calc(16px + env(safe-area-inset-top)) 18px 20px;border-radius:0 0 24px 24px}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:#b7f7cb;color:#173b2a;display:grid;place-items:center;font-size:23px;font-weight:800}.brand h1{font-size:21px;margin:0}.brand p{font-size:11px;letter-spacing:1.2px;color:#c2d4ca;margin:2px 0 0}.eyebrow{font-size:12px;color:#c2d4ca;margin-top:24px}.balance{font-size:34px;font-weight:750;letter-spacing:-1px;margin:2px 0 15px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#294239;border-radius:14px;padding:12px}.stat span{display:block;color:#c2d4ca;font-size:12px}.stat strong{display:block;font-size:18px;margin-top:4px;overflow-wrap:anywhere}.wrap{max-width:650px;margin:auto}.content{padding:18px 15px}.tabs{position:fixed;z-index:5;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 5px calc(8px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}.tab{border:0;background:transparent;color:var(--muted);font-size:11px;padding:5px 0;display:grid;gap:3px;justify-items:center}.tab span:first-child{font-size:21px}.tab.active{color:var(--green);font-weight:700}.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #172a2506}.card h2{font-size:17px;margin:0 0 13px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.muted{color:var(--muted);font-size:13px}.big{font-size:25px;font-weight:750}.positive{color:var(--green)}.negative{color:var(--red)}.progress{height:9px;background:#e8eee9;border-radius:99px;overflow:hidden;margin:12px 0 7px}.progress div{height:100%;background:#36a66b;border-radius:99px;width:0}.progress.over div{background:#d9534f}.btn{border:0;border-radius:12px;padding:12px 14px;background:var(--green);color:white;font-weight:650}.btn.secondary{background:#e8f0ea;color:var(--ink)}.btn.danger{background:#fff0f0;color:var(--red)}.btn.full{width:100%}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;font-weight:650}.field input,.field select{width:100%;min-width:0;border:1px solid #d5dfd7;border-radius:11px;padding:12px;background:white;color:var(--ink)}.toggle{display:flex;background:#eef2ee;border-radius:12px;padding:4px;gap:4px}.toggle button{flex:1;border:0;background:transparent;padding:9px;border-radius:9px;color:var(--muted)}.toggle button.active{background:white;color:var(--ink);box-shadow:0 1px 4px #0001;font-weight:700}.transaction{display:flex;gap:11px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.transaction:last-child{border-bottom:0}.tx-icon{width:42px;height:42px;border-radius:13px;background:#edf3ee;display:grid;place-items:center;font-size:19px;flex-shrink:0}.tx-main{min-width:0;flex:1}.tx-main strong{display:block;overflow-wrap:anywhere}.tx-main small{color:var(--muted)}.tx-amount{font-weight:750;white-space:nowrap}.iconbtn{border:0;background:transparent;color:var(--muted);padding:6px;font-size:18px}.empty{text-align:center;padding:22px 8px;color:var(--muted)}.empty .emoji{font-size:30px;margin-bottom:6px}.goal{border:1px solid var(--line);border-radius:15px;padding:13px;margin:10px 0}.notice{font-size:12px;color:var(--muted);line-height:1.5}.monthbar{display:flex;gap:8px;align-items:center;margin-bottom:14px}.monthbar input{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px;background:white}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><div class="logo">₣</div><div><h1>PocketPlan</h1><p>DEIN GELD. DEIN PLAN.</p></div></div>
+  <div class="eyebrow">Dein aktueller Kontostand</div>
+  <div class="balance" id="balance">0,00 €</div>
+  <div class="stats"><div class="stat"><span>Einnahmen diesen Monat</span><strong id="incomeTotal">0,00 €</strong></div><div class="stat"><span>Ausgaben diesen Monat</span><strong id="expenseTotal">0,00 €</strong></div></div>
+</header>
+<main class="content">
+<section class="page active" id="page-home">
+  <div class="monthbar"><label for="month" class="muted">Monat</label><input id="month" type="month"></div>
+  <div class="card">
+    <div class="row"><h2>Monatsbudget</h2><button class="iconbtn" id="editBudgetBtn" aria-label="Budget ändern">✎</button></div>
+    <div class="muted">Noch verfügbar</div><div class="big" id="budgetLeft">150,00 €</div>
+    <div class="progress" id="budgetProgress"><div id="budgetBar"></div></div>
+    <div class="row muted"><span id="budgetSpent">0,00 € ausgegeben</span><span id="budgetLabel">Budget: 150,00 €</span></div>
+    <div id="budgetEditor" class="hidden"><div class="field"><label for="budgetInput">Monatsbudget in Euro</label><input id="budgetInput" type="number" min="0" step=".01"></div><button class="btn full" id="saveBudget">Budget speichern</button></div>
+  </div>
+  <div class="card"><div class="row"><h2>Letzte Buchungen</h2><button class="iconbtn" data-go="transactions">Alle anzeigen →</button></div><div id="recent"></div></div>
+  <button class="btn full" data-go="add">＋ Buchung hinzufügen</button>
+</section>
+<section class="page" id="page-transactions">
+  <div class="row"><h2>Alle Buchungen</h2><button class="btn" data-go="add">＋ Neu</button></div>
+  <div class="field"><label for="filter">Ansicht</label><select id="filter"><option value="month">Ausgewählter Monat</option><option value="all">Alle Buchungen</option></select></div>
+  <div class="card" id="allTransactions"></div>
+</section>
+<section class="page" id="page-add">
+  <div class="card">
+    <h2>Neue Buchung</h2>
+    <div class="toggle"><button type="button" id="expenseType" class="active">− Ausgabe</button><button type="button" id="incomeType">＋ Einnahme</button></div>
+    <form id="transactionForm">
+      <div class="field"><label for="amount">Betrag (€)</label><input id="amount" inputmode="decimal" type="number" min=".01" step=".01" placeholder="12,50" required></div>
+      <div class="field"><label for="description">Beschreibung</label><input id="description" maxlength="90" placeholder="z. B. Tanken" required></div>
+      <div class="field"><label for="category">Kategorie</label><select id="category"></select></div>
+      <div class="field"><label for="date">Datum</label><input id="date" type="date" required></div>
+      <button class="btn full" type="submit">Buchung speichern</button>
+    </form>
+  </div>
+</section>
+<section class="page" id="page-goals">
+  <div class="card"><h2>Deine Sparziele</h2><p class="muted">Verfolge, wie nah du deinem Ziel kommst.</p><div id="goalsList"></div></div>
+  <div class="card"><h2>Neues Sparziel</h2><form id="goalForm"><div class="field"><label for="goalName">Name</label><input id="goalName" maxlength="70" placeholder="z. B. Notgroschen" required></div><div class="field"><label for="goalTarget">Zielbetrag (€)</label><input id="goalTarget" type="number" min=".01" step=".01" placeholder="1000" required></div><button class="btn full" type="submit">Sparziel hinzufügen</button></form></div>
+</section>
+<section class="page" id="page-settings">
+  <div class="card"><h2>Einstellungen</h2><div class="field"><label for="openingBalance">Startguthaben (€)</label><input id="openingBalance" type="number" step=".01"></div><button class="btn full" id="saveSettings">Einstellungen speichern</button></div>
+  <div class="card"><h2>Backup & Datenschutz</h2><p class="notice">Deine Daten werden in diesem Browser auf diesem Gerät gespeichert. Sie werden nicht an ein Bankkonto oder einen Server übertragen. Wenn du Safari-Daten löschst, das Gerät wechselst oder die Browserdaten verlierst, können die Daten verloren gehen. Erstelle regelmäßig ein Backup.</p><div class="field"><label for="backupFile">Backup-Datei importieren</label><input id="backupFile" type="file" accept="application/json"></div><button class="btn full" id="exportBtn">Backup exportieren</button><div style="height:8px"></div><button class="btn secondary full" id="importBtn">Ausgewählte Sicherung importieren</button><div style="height:8px"></div><button class="btn danger full" id="resetBtn">Alle App-Daten löschen</button></div>
+  <p class="notice">PocketPlan ist ein privater Budgetplaner, keine Bank-App. Die lokale Speicherung ist nicht verschlüsselt. Schütze dein iPhone mit einem Gerätecode.</p>
+</section>
+</main>
+<nav class="tabs" aria-label="Hauptnavigation">
+<button class="tab active" data-page="home"><span>⌂</span>Übersicht</button>
+<button class="tab" data-page="transactions"><span>▤</span>Buchungen</button>
+<button class="tab" data-page="goals"><span>◎</span>Sparziele</button>
+<button class="tab" data-page="settings"><span>⚙</span>Einstellungen</button>
+</nav>
+</div>
+<script>
+const KEY='pocketplan-local-v1';
+const categories={Ausgabe:['Lebensmittel','Auto & Tanken','Schule','Versicherung','Freizeit','Shopping','Wohnen','Gesundheit','Abos','Sonstiges'],Einnahme:['Gehalt / Arbeit','Nebenverdienst','Geschenk','Erstattung','Sonstiges']};
+const today=()=>new Date().toLocaleDateString('sv-SE');
+const thisMonth=()=>today().slice(0,7);
+const euro=n=>Number(n||0).toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let state={transactions:[],goals:[],budget:150,openingBalance:0,txType:'Ausgabe'};
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'{}');state={...state,...s};if(!Array.isArray(state.transactions))state.transactions=[];if(!Array.isArray(state.goals))state.goals=[];}catch(e){console.warn('Lokale Daten konnten nicht gelesen werden.');}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function monthTx(){const m=document.getElementById('month').value;return state.transactions.filter(t=>t.date&&t.date.slice(0,7)===m);}
+function sum(arr,type){return arr.filter(t=>t.type===type).reduce((a,t)=>a+t.amount,0);}
+function renderTx(t,withDelete=true){return `<div class="transaction"><div class="tx-icon">${t.type==='Einnahme'?'↙':'↗'}</div><div class="tx-main"><strong>${escapeHtml(t.description)}</strong><small>${escapeHtml(t.category)} · ${escapeHtml(t.date)}</small></div><div class="tx-amount ${t.type==='Einnahme'?'positive':''}">${t.type==='Einnahme'?'+':'−'}${euro(t.amount)}</div>${withDelete?`<button class="iconbtn" data-delete="${escapeHtml(t.id)}" aria-label="Buchung löschen">×</button>`:''}</div>`}
+function render(){
+ const mtx=monthTx(),inc=sum(mtx,'Einnahme'),exp=sum(mtx,'Ausgabe');
+ document.getElementById('balance').textContent=euro(Number(state.openingBalance||0)+sum(state.transactions,'Einnahme')-sum(state.transactions,'Ausgabe'));
+ document.getElementById('incomeTotal').textContent=euro(inc);document.getElementById('expenseTotal').textContent=euro(exp);
+ const left=Number(state.budget||0)-exp;document.getElementById('budgetLeft').textContent=euro(left);document.getElementById('budgetLeft').className='big '+(left<0?'negative':'positive');
+ document.getElementById('budgetSpent').textContent=euro(exp)+' ausgegeben';document.getElementById('budgetLabel').textContent='Budget: '+euro(state.budget);
+ const pct=Number(state.budget)>0?Math.min(100,exp/Number(state.budget)*100):(exp>0?100:0);document.getElementById('budgetBar').style.width=pct+'%';document.getElementById('budgetProgress').classList.toggle('over',exp>Number(state.budget));
+ document.getElementById('recent').innerHTML=mtx.length?mtx.slice().sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id)).slice(0,5).map(t=>renderTx(t,false)).join(''):'<div class="empty"><div class="emoji">🧾</div>Noch keine Buchungen in diesem Monat.</div>';
+ const filter=document.getElementById('filter').value;let all=filter==='all'?state.transactions:mtx;all=all.slice().sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id));
+ document.getElementById('allTransactions').innerHTML=all.length?all.map(t=>renderTx(t,true)).join(''):'<div class="empty">Keine Buchungen gefunden.</div>';
+ document.getElementById('goalsList').innerHTML=state.goals.length?state.goals.map(g=>`<div class="goal"><div class="row"><strong>${escapeHtml(g.name)}</strong><button class="iconbtn" data-goaldelete="${escapeHtml(g.id)}" aria-label="Sparziel löschen">×</button></div><div class="row" style="margin-top:7px"><span class="muted">${euro(g.saved)} von ${euro(g.target)}</span><strong>${Math.round(Math.min(100,g.saved/g.target*100))}%</strong></div><div class="progress"><div style="width:${Math.min(100,g.saved/g.target*100)}%"></div></div>${g.saved>=g.target?'<p class="positive">Ziel erreicht 🎉</p>':''}<form data-contribute="${escapeHtml(g.id)}"><div class="row"><input name="contribution" type="number" min=".01" step=".01" placeholder="Einzahlung (€)" required style="min-width:0;width:60%;padding:10px;border:1px solid var(--line);border-radius:10px"><button class="btn" type="submit">Einzahlen</button></div></form></div>`).join(''):'<div class="empty"><div class="emoji">🎯</div>Erstelle dein erstes Sparziel.</div>';
+ document.getElementById('budgetInput').value=state.budget;document.getElementById('openingBalance').value=state.openingBalance;
+}
+function show(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='add'){state.txType='Ausgabe';setType();document.getElementById('date').value=today();}}
+function setType(){document.getElementById('expenseType').classList.toggle('active',state.txType==='Ausgabe');document.getElementById('incomeType').classList.toggle('active',state.txType==='Einnahme');const s=document.getElementById('category');s.innerHTML=categories[state.txType].map(c=>`<option>${escapeHtml(c)}</option>`).join('');}
+load();document.getElementById('month').value=thisMonth();document.getElementById('date').value=today();setType();render();
+document.addEventListener('click',e=>{
+ const nav=e.target.closest('[data-page]');if(nav)show(nav.dataset.page);
+ const go=e.target.closest('[data-go]');if(go){show(go.dataset.go);return}
+ const del=e.target.closest('[data-delete]');if(del&&confirm('Diese Buchung wirklich löschen?')){state.transactions=state.transactions.filter(t=>t.id!==del.dataset.delete);save();render()}
+ const gd=e.target.closest('[data-goaldelete]');if(gd&&confirm('Dieses Sparziel wirklich löschen?')){state.goals=state.goals.filter(g=>g.id!==gd.dataset.goaldelete);save();render()}
+});
+document.getElementById('expenseType').onclick=()=>{state.txType='Ausgabe';setType()};document.getElementById('incomeType').onclick=()=>{state.txType='Einnahme';setType()};
+document.getElementById('transactionForm').addEventListener('submit',e=>{e.preventDefault();const amount=Number(document.getElementById('amount').value);if(!(amount>0))return;state.transactions.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:state.txType,amount:Math.round(amount*100)/100,description:document.getElementById('description').value.trim(),category:document.getElementById('category').value,date:document.getElementById('date').value||today()});save();e.target.reset();document.getElementById('date').value=today();render();show('home');});
+document.getElementById('month').addEventListener('change',render);document.getElementById('filter').addEventListener('change',render);
+document.getElementById('editBudgetBtn').onclick=()=>document.getElementById('budgetEditor').classList.toggle('hidden');
+document.getElementById('saveBudget').onclick=()=>{const v=Number(document.getElementById('budgetInput').value);if(v>=0&&Number.isFinite(v)){state.budget=v;save();render();document.getElementById('budgetEditor').classList.add('hidden')}};
+document.getElementById('goalForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('goalName').value.trim(),target=Number(document.getElementById('goalTarget').value);if(!name||!(target>0))return;state.goals.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,target,saved:0});save();e.target.reset();render()});
+document.getElementById('goalsList').addEventListener('submit',e=>{const form=e.target.closest('[data-contribute]');if(!form)return;e.preventDefault();const v=Number(new FormData(form).get('contribution'));if(v>0){state.goals=state.goals.map(g=>g.id===form.dataset.contribute?{...g,saved:Math.round((g.saved+v)*100)/100}:g);save();render()}});
+document.getElementById('saveSettings').onclick=()=>{const v=Number(document.getElementById('openingBalance').value);if(Number.isFinite(v)){state.openingBalance=v;save();render();alert('Einstellungen gespeichert.')}};
+document.getElementById('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({...state,backupCreated:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pocketplan-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)};
+document.getElementById('importBtn').onclick=async()=>{const file=document.getElementById('backupFile').files[0];if(!file){alert('Bitte wähle zuerst eine Backup-Datei aus.');return}try{const data=JSON.parse(await file.text());if(!Array.isArray(data.transactions)||!Array.isArray(data.goals))throw new Error();if(!confirm('Die aktuellen Daten werden durch die Sicherung ersetzt. Fortfahren?'))return;state={transactions:data.transactions,goals:data.goals,budget:Number(data.budget)||0,openingBalance:Number(data.openingBalance)||0,txType:'Ausgabe'};save();render();alert('Backup importiert.')}catch(e){alert('Die Datei ist kein gültiges PocketPlan-Backup.')}};
+document.getElementById('resetBtn').onclick=()=>{if(confirm('Wirklich alle Buchungen, Sparziele und Einstellungen löschen? Diese Aktion kann nicht rückgängig gemacht werden.')){localStorage.removeItem(KEY);state={transactions:[],goals:[],budget:150,openingBalance:0,txType:'Ausgabe'};save();render()}};
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
